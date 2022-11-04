@@ -1,0 +1,149 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/05/2022  02:36:57  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\PROJ.obj TO .\Objects\proj PRINT (.\Listings\proj.m51) RAMSIZE (256)
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\PROJ.obj (PROJ)
+
+
+LINK MAP OF MODULE:  .\Objects\proj (PROJ)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     010FH     ABSOLUTE     
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\proj (PROJ)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        PROJ
+  C:00EFH         SYMBOL        CHAR_CODE
+  C:00CAH         SYMBOL        CLEAR
+  C:00A6H         SYMBOL        DELAY1000MS
+  C:0091H         SYMBOL        DELAY100MS
+  C:0052H         SYMBOL        DETECT_S1
+  C:00C5H         SYMBOL        DISPLAY
+  C:0042H         SYMBOL        DISPLAY_NAME
+  B:0080H.0       SYMBOL        DS_X
+  B:0080H.3       SYMBOL        DS_Y
+  B:0080H.7       SYMBOL        EN_X
+  B:0080H.4       SYMBOL        EN_Y
+  C:0077H         SYMBOL        FOR_SH8_X
+  C:0086H         SYMBOL        FOR_SH8_Y
+  C:010FH         SYMBOL        ICON_CODE
+  C:003EH         SYMBOL        INIT
+  C:00CFH         SYMBOL        LINE_CODE
+  C:0030H         SYMBOL        MAIN
+  C:00B5H         SYMBOL        NEXT1000MS
+  C:009BH         SYMBOL        NEXT100MS
+  C:0046H         SYMBOL        NEXTLN
+  D:0080H         SYMBOL        P0
+  C:0065H         SYMBOL        PRINTLN
+  C:0057H         SYMBOL        SETLN
+  C:0073H         SYMBOL        SH8_X
+  C:0082H         SYMBOL        SH8_Y
+  B:0080H.1       SYMBOL        SHCP_X
+  B:0080H.5       SYMBOL        SHCP_Y
+  B:0080H.2       SYMBOL        STCP_X
+  B:0080H.6       SYMBOL        STCP_Y
+  C:0053H         SYMBOL        STEER_ICON
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/05/2022  02:36:57  PAGE 2
+
+
+  C:0000H         LINE#         20
+  C:0030H         LINE#         23
+  C:0033H         LINE#         24
+  C:0036H         LINE#         25
+  C:0039H         LINE#         26
+  C:003CH         LINE#         27
+  C:003EH         LINE#         30
+  C:0041H         LINE#         31
+  C:0042H         LINE#         34
+  C:0044H         LINE#         35
+  C:0046H         LINE#         37
+  C:0049H         LINE#         38
+  C:004CH         LINE#         39
+  C:004FH         LINE#         40
+  C:0051H         LINE#         41
+  C:0052H         LINE#         44
+  C:0053H         LINE#         47
+  C:0056H         LINE#         48
+  C:0057H         LINE#         51
+  C:005AH         LINE#         52
+  C:005CH         LINE#         53
+  C:005FH         LINE#         54
+  C:0062H         LINE#         55
+  C:0064H         LINE#         56
+  C:0065H         LINE#         59
+  C:0068H         LINE#         60
+  C:006AH         LINE#         61
+  C:006DH         LINE#         62
+  C:0070H         LINE#         63
+  C:0072H         LINE#         64
+  C:0073H         LINE#         67
+  C:0074H         LINE#         68
+  C:0075H         LINE#         70
+  C:0077H         LINE#         72
+  C:0079H         LINE#         73
+  C:007AH         LINE#         74
+  C:007CH         LINE#         75
+  C:007EH         LINE#         76
+  C:0080H         LINE#         78
+  C:0081H         LINE#         79
+  C:0082H         LINE#         82
+  C:0083H         LINE#         83
+  C:0084H         LINE#         85
+  C:0086H         LINE#         87
+  C:0088H         LINE#         88
+  C:0089H         LINE#         89
+  C:008BH         LINE#         90
+  C:008DH         LINE#         91
+  C:008FH         LINE#         93
+  C:0090H         LINE#         94
+  C:0091H         LINE#         97
+  C:0093H         LINE#         98
+  C:0095H         LINE#         99
+  C:0098H         LINE#         100
+  C:009BH         LINE#         102
+  C:009EH         LINE#         103
+  C:00A1H         LINE#         104
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/05/2022  02:36:57  PAGE 3
+
+
+  C:00A3H         LINE#         105
+  C:00A5H         LINE#         106
+  C:00A6H         LINE#         109
+  C:00A8H         LINE#         110
+  C:00AAH         LINE#         111
+  C:00ACH         LINE#         112
+  C:00AFH         LINE#         113
+  C:00B2H         LINE#         114
+  C:00B5H         LINE#         116
+  C:00B8H         LINE#         117
+  C:00BBH         LINE#         118
+  C:00BEH         LINE#         119
+  C:00C0H         LINE#         120
+  C:00C2H         LINE#         121
+  C:00C4H         LINE#         122
+  C:00C5H         LINE#         125
+  C:00C7H         LINE#         126
+  C:00C9H         LINE#         127
+  C:00CAH         LINE#         130
+  C:00CCH         LINE#         131
+  C:00CEH         LINE#         132
+  -------         ENDMOD        PROJ
+
+Program Size: data=8.0 xdata=0 code=271
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

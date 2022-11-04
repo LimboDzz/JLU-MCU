@@ -1,0 +1,221 @@
+A51 MACRO ASSEMBLER  PROJ                                                                 11/05/2022 02:36:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\PROJ.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE PROJ.a51 SET(SMALL) DEBUG PRINT(.\Listings\PROJ.lst) OBJECT(.\Objects\P
+                      ROJ.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;------------------------------------P0.X IDENTIFIER
+  0080                 2     DS_X    EQU P0.0
+  0081                 3     SHCP_X  EQU P0.1
+  0082                 4     STCP_X  EQU P0.2
+  0083                 5     DS_Y    EQU P0.3
+  0084                 6     EN_Y    EQU P0.4
+  0085                 7     SHCP_Y  EQU P0.5
+  0086                 8     STCP_Y  EQU P0.6
+  0087                 9     EN_X    EQU P0.7
+                      10     ;------------------------------------ADDR IDENTIFIER
+                      11     ;?????????????????
+                      12     ;?????????????????
+                      13     ;?????????????????
+                      14     ;------------------------------------REG UTILIZATION
+                      15     ;R0 INDEX OF LINE_CODE ARR
+                      16     ;R1 INDEX OF CHAR_CODE ARR
+                      17     ;R7 SHFIT 8BIT IN DS
+                      18     ;------------------------------------RESET
+0000                  19             ORG 00H
+0000 802E             20             SJMP MAIN
+0030                  21             ORG 30H
+0030                  22     MAIN:
+0030 12003E           23             LCALL INIT
+0033 120042           24             LCALL DISPLAY_NAME
+0036 120052           25             LCALL DETECT_S1
+0039 120053           26             LCALL STEER_ICON
+003C 80FE             27             SJMP $
+                      28     ;------------------------------------MAIN FUNCTIONS
+003E                  29     INIT:
+003E 1200C5           30             LCALL DISPLAY
+0041 22               31             RET
+                      32             
+0042                  33     DISPLAY_NAME:
+0042 7800             34             MOV R0,#0                               ;INDEX OF LINE_CODE
+0044 7900             35             MOV R1,#0                               ;INDEX OF CHAR_CODE
+0046                  36     NEXTLN:
+0046 120057           37             LCALL SETLN
+0049 120065           38             LCALL PRINTLN
+004C B820F7           39             CJNE R0,#32,NEXTLN
+004F 80F1             40             SJMP DISPLAY_NAME
+0051 22               41             RET
+                      42             
+0052                  43     DETECT_S1:
+0052 22               44             RET
+                      45             
+0053                  46     STEER_ICON:
+0053 90010F           47             MOV DPTR,#ICON_CODE
+0056 22               48             RET
+                      49     ;------------------------------------SETLN_PRINTLN
+0057                  50     SETLN:
+0057 9000CF           51             MOV DPTR,#LINE_CODE
+005A C282             52             CLR STCP_X
+005C 120073           53             LCALL SH8_X
+005F 120073           54             LCALL SH8_X
+0062 D282             55             SETB STCP_X
+0064 22               56             RET
+                      57     
+A51 MACRO ASSEMBLER  PROJ                                                                 11/05/2022 02:36:57 PAGE     2
+
+0065                  58     PRINTLN:
+0065 9000EF           59             MOV DPTR,#CHAR_CODE
+0068 C286             60             CLR STCP_Y
+006A 120082           61             LCALL SH8_Y
+006D 120082           62             LCALL SH8_Y
+0070 D286             63             SETB STCP_Y
+0072 22               64             RET
+                      65     ;----------------------------------------SH8_X
+0073                  66     SH8_X:
+0073 E8               67             MOV A,R0
+0074 93               68             MOVC A,@A+DPTR
+                      69             
+0075 7F08             70             MOV R7,#8
+0077                  71     FOR_SH8_X: 
+0077 C281             72             CLR SHCP_X
+0079 33               73         RLC A
+007A 9280             74         MOV DS_X,C
+007C D281             75             SETB SHCP_X
+007E DFF7             76             DJNZ R7,FOR_SH8_X
+                      77             
+0080 08               78             INC R0
+0081 22               79             RET
+                      80     ;----------------------------------------SH8_Y
+0082                  81     SH8_Y:
+0082 E9               82             MOV A,R1
+0083 93               83             MOVC A,@A+DPTR
+                      84             
+0084 7F08             85             MOV R7,#8
+0086                  86     FOR_SH8_Y: 
+0086 C285             87             CLR SHCP_Y
+0088 33               88         RLC A
+0089 9283             89         MOV DS_Y,C
+008B D285             90             SETB SHCP_Y
+008D DFF7             91             DJNZ R7,FOR_SH8_Y
+                      92             
+008F 09               93             INC R1
+0090 22               94             RET
+                      95     ;----------------------------------------DELAY
+0091                  96     DELAY100MS:                     ;@12.000MHz
+0091 C030             97             PUSH 30H
+0093 C031             98             PUSH 31H
+0095 7530C3           99             MOV 30H,#195
+0098 753185          100             MOV 31H,#133
+009B                 101     NEXT100MS:
+009B D531FD          102             DJNZ 31H,NEXT100MS
+009E D530FA          103             DJNZ 30H,NEXT100MS
+00A1 D031            104             POP 31H
+00A3 D030            105             POP 30H
+00A5 22              106             RET
+                     107             
+00A6                 108     DELAY1000MS:                    ;@12.000MHz
+00A6 C030            109             PUSH 30H
+00A8 C031            110             PUSH 31H
+00AA C032            111             PUSH 32H
+00AC 753008          112             MOV 30H,#8
+00AF 75319A          113             MOV 31H,#154
+00B2 753273          114             MOV 32H,#115
+00B5                 115     NEXT1000MS:
+00B5 D532FD          116             DJNZ 32H,NEXT1000MS
+00B8 D531FA          117             DJNZ 31H,NEXT1000MS
+00BB D530F7          118             DJNZ 30H,NEXT1000MS
+00BE D032            119             POP 32H
+00C0 D031            120             POP 31H
+00C2 D030            121             POP 30H
+00C4 22              122             RET
+                     123     ;----------------------------------------DISPLAY+CLEAR
+A51 MACRO ASSEMBLER  PROJ                                                                 11/05/2022 02:36:57 PAGE     3
+
+00C5                 124     DISPLAY:
+00C5 C287            125             CLR EN_X
+00C7 C284            126             CLR EN_Y
+00C9 22              127             RET
+                     128             
+00CA                 129     CLEAR:
+00CA D287            130             SETB EN_X
+00CC D284            131             SETB EN_Y
+00CE 22              132             RET
+                     133     ;----------------------------------------CODE
+00CF                 134     LINE_CODE:
+00CF FFFE            135     DB 11111111B,11111110B
+00D1 FFFD            136     DB 11111111B,11111101B
+00D3 FFFB            137     DB 11111111B,11111011B
+00D5 FFF7            138     DB 11111111B,11110111B
+00D7 FFEF            139     DB 11111111B,11101111B
+00D9 FFDF            140     DB 11111111B,11011111B
+00DB FFBF            141     DB 11111111B,10111111B
+00DD FF7F            142     DB 11111111B,01111111B
+00DF FEFF            143     DB 11111110B,11111111B
+00E1 FDFF            144     DB 11111101B,11111111B
+00E3 FBFF            145     DB 11111011B,11111111B
+00E5 F7FF            146     DB 11110111B,11111111B
+00E7 EFFF            147     DB 11101111B,11111111B
+00E9 DFFF            148     DB 11011111B,11111111B
+00EB BFFF            149     DB 10111111B,11111111B
+00ED 7FFF            150     DB 01111111B,11111111B
+00EF                 151     CHAR_CODE:
+                     152     ;LING
+00EF 08080888        153     DB 08H,08H,08H,88H,0FH,0F8H,0FH,0F8H,09H,90H,03H,40H,06H,50H,0CH,58H
+00F3 0FF80FF8                
+00F7 09900340                
+00FB 06500C58                
+00FF 1B4819D8        154     DB 1BH,48H,19H,0D8H,0CH,74H,06H,64H,03H,40H,01H,00H,00H,00H,00H,00H
+0103 0C740664                
+0107 03400100                
+010B 00000000                
+010F                 155     ICON_CODE:
+                     156     
+                     157     END
+A51 MACRO ASSEMBLER  PROJ                                                                 11/05/2022 02:36:57 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CHAR_CODE. . . . .  C ADDR   00EFH   A   
+CLEAR. . . . . . .  C ADDR   00CAH   A   
+DELAY1000MS. . . .  C ADDR   00A6H   A   
+DELAY100MS . . . .  C ADDR   0091H   A   
+DETECT_S1. . . . .  C ADDR   0052H   A   
+DISPLAY. . . . . .  C ADDR   00C5H   A   
+DISPLAY_NAME . . .  C ADDR   0042H   A   
+DS_X . . . . . . .  B ADDR   0080H.0 A   
+DS_Y . . . . . . .  B ADDR   0080H.3 A   
+EN_X . . . . . . .  B ADDR   0080H.7 A   
+EN_Y . . . . . . .  B ADDR   0080H.4 A   
+FOR_SH8_X. . . . .  C ADDR   0077H   A   
+FOR_SH8_Y. . . . .  C ADDR   0086H   A   
+ICON_CODE. . . . .  C ADDR   010FH   A   
+INIT . . . . . . .  C ADDR   003EH   A   
+LINE_CODE. . . . .  C ADDR   00CFH   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+NEXT1000MS . . . .  C ADDR   00B5H   A   
+NEXT100MS. . . . .  C ADDR   009BH   A   
+NEXTLN . . . . . .  C ADDR   0046H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+PRINTLN. . . . . .  C ADDR   0065H   A   
+SETLN. . . . . . .  C ADDR   0057H   A   
+SH8_X. . . . . . .  C ADDR   0073H   A   
+SH8_Y. . . . . . .  C ADDR   0082H   A   
+SHCP_X . . . . . .  B ADDR   0080H.1 A   
+SHCP_Y . . . . . .  B ADDR   0080H.5 A   
+STCP_X . . . . . .  B ADDR   0080H.2 A   
+STCP_Y . . . . . .  B ADDR   0080H.6 A   
+STEER_ICON . . . .  C ADDR   0053H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

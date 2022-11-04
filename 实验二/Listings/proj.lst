@@ -1,0 +1,86 @@
+C51 COMPILER V9.60.0.0   PROJ                                                              09/27/2022 14:30:19 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PROJ
+OBJECT MODULE PLACED IN .\Objects\proj.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE proj.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\..\KeilProjs\lib) DEBUG OBJECT
+                    -EXTEND PRINT(.\Listings\proj.lst) TABS(2) OBJECT(.\Objects\proj.obj)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "codes.h"
+   3          #include "delay.h"
+   4          
+   5          #region sbit
+*** WARNING C315 IN LINE 5 OF proj.c: unknown #directive 'region'
+   6          sbit RST_164=P1^1;
+   7          sbit CLK_164=P1^4;
+   8          sbit IN_164 =P1^5;
+   9          sbit btn    =P1^0;    // btn==0 pressed down
+  10          #endregion
+*** WARNING C315 IN LINE 10 OF proj.c: unknown #directive 'endregion'
+  11          
+  12          #region !IMPORTENT
+*** WARNING C315 IN LINE 12 OF proj.c: unknown #directive 'region'
+  13          // hex_code&0x80 to get the HIGHEST bit CUZ abcdefg link to P^0123456
+  14          // would go wrong if you get the lowest bit as is done in the tutorial, cuz the codes sequence in reverse
+  15          #endregion
+*** WARNING C315 IN LINE 15 OF proj.c: unknown #directive 'endregion'
+  16          
+  17          unsigned char flag=0;
+  18          unsigned int num=0x00;
+  19          
+  20          void onkeyup(){
+  21   1        if(flag==0&&btn==0){
+  22   2          flag=1; // pressed down
+  23   2        }
+  24   1        if(flag==1&&btn==1){
+  25   2          flag=0;
+  26   2        }
+  27   1      }
+  28          
+  29          // display 2 digit hex_num
+  30          void display_2_digit_hex(unsigned int hex){
+  31   1        unsigned int digit[2],i=0,j=0;
+  32   1        digit[1]=hex/16;
+  33   1        digit[0]=hex%16;
+  34   1        for(i=0;i<2;i++){
+  35   2          // send every digit(8bit to lit a 7seg) in 8 times
+  36   2          unsigned int n=digit[i];
+  37   2          unsigned int hex_code=SEG_CC_NUM[n];
+  38   2          for(j=0;j<8;j++){
+  39   3            CLK_164=0;
+  40   3            IN_164=hex_code&0x80;     // &0x80 to get the highest bit abcdefg link to P^0123456
+  41   3            hex_code=hex_code<<1;     // shl 8 times in this loop
+  42   3            CLK_164=1;                // CLK_164 0->1 Enable
+  43   3          }
+  44   2        }
+  45   1      }
+  46          
+  47          void main(){
+  48   1        while(1){
+  49   2          display_2_digit_hex(num);
+  50   2          onkeyup();
+C51 COMPILER V9.60.0.0   PROJ                                                              09/27/2022 14:30:19 PAGE 2   
+
+  51   2          if(flag){
+  52   3            num=++num%256;
+  53   3            delay_ms(500);
+  54   3          }
+  55   2        }
+  56   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    191    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     87      12
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  4 WARNING(S),  0 ERROR(S)
